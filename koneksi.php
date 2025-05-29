@@ -1,6 +1,7 @@
 <?php
 
 use Dom\Text;
+
 class database
 {
     private $host = "localhost";
@@ -34,8 +35,8 @@ class database
                 s.no_hp, 
                 s.jenis_kelamin 
                     FROM siswa s
-                    JOIN jurusan j ON s.jurusan = j.kode_jurusan
-                    JOIN agama a ON s.agama = a.kode_agama");
+                    JOIN jurusan j ON s.jurusan = j.id_jurusan
+                    JOIN agama a ON s.agama = a.id_agama");
         $hasil = array();
         while ($d = mysqli_fetch_array($data_siswa)) {
             $hasil[] = $d;
@@ -80,5 +81,19 @@ class database
         $data = mysqli_query($this->koneksi, "INSERT INTO jurusan (nama_jurusan) VALUES ('$nama_jurusan')");
         return mysqli_fetch_array($data);
     }
+    function tampilJumlahDataSiswa()
+    {
+        $data = mysqli_query($this->koneksi, "SELECT COUNT(*) AS total FROM siswa");
+        $hasil = mysqli_fetch_assoc($data);
+        return $hasil['total'];
+    }
+    function tampilJumlahDataKelas()
+    {
+        $data = mysqli_query($this->koneksi, "SELECT COUNT(*) AS total FROM jurusan");
+        $hasil = mysqli_fetch_assoc($data);
+        return $hasil['total'];
+    }
+    function hapusData($table,$id){
+        $data =mysqli_query($this->koneksi,"DELETE FROM $table WHERE $id");
+    }
 }
-?>

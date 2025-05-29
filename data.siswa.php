@@ -9,8 +9,11 @@ $db = new database();
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>AdminLTE 4 | Tables Siswa</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <!-- datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
     <!--begin::Primary Meta Tags-->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="AdminLTE 4 | Tables Siswa" />
     <meta name="author" content="ColorlibHQ" />
@@ -226,7 +229,7 @@ $db = new database();
         </nav>
         <!--end::Header-->
         <!--begin::Sidebar-->
-        <?php include "sidebar.php" ?>
+        <?php include "sidebar.php"; ?>
         <!--end::Sidebar-->
         <!--begin::App Main-->
         <main class="app-main">
@@ -265,8 +268,8 @@ $db = new database();
                                     <h3 class="card-title">Tables Siswa</h3>
                                 </div>
 
-                                <div class="card-body overflow-x-auto mx-2">
-                                    <table class="table table-bordered">
+                                <div class="card-body overflow-x-auto mx-2 gap-3">
+                                    <table id="tabelSiswa" class="display table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th class="text-center whitespace-nowrap">No.</th>
@@ -283,36 +286,41 @@ $db = new database();
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="align-middle">
-                                                <?php
-                                                $no = 1;
-                                                foreach ($db->tampil_data_siswa() as $s) {
-                                                    $jenisKelamin = $s['jenis_kelamin'] == 'L' ? 'Laki-laki' : 'Perempuan';
-                                                    ?>
-                                                <tr>
-                                                    <td class="whitespace-nowraptext-center"><?php echo $no++; ?></td>
-                                                    <td class="whitespace-nowraptext-center"><?php echo $s['id_siswa']; ?></td>
-                                                    <td class="whitespace-nowraptext-center"><?php echo $s['nisn']; ?></td>
-                                                    <td class="whitespace-nowrap"><?php echo $s['nama']; ?></td>
-                                                    <td class="whitespace-nowraptexy-center"><?php echo $jenisKelamin ?></td>
-                                                    <td class="whitespace-nowraptexy-center"><?php echo $s['jurusan']; ?></td>
-                                                    <td class="whitespace-nowraptexy-center"><?php echo $s['kelas']; ?></td>
-                                                    <td class="whitespace-nowraptext-center"><?php echo $s['alamat']; ?></td>
-                                                    <td class="whitespace-nowraptext-center"><?php echo $s['agama']; ?></td>
-                                                    <td class="whitespace-nowraptext-center"><?php echo $s['no_hp']; ?></td>
-                                                    <td class="flex justify-center items-center gap-0.5">
-                                                        <button class="text-blue-600">Edit</button>
-                                                        |
-                                                        <button class="text-red-600">Hapus</button>
+                                            <?php
+                                            $tabel="siswa";
+                                            $no = 1;
+                                            foreach ($db->tampil_data_siswa() as $s) {
+                                                $jenisKelamin = $s['jenis_kelamin'] == 'L' ? 'Laki-laki' : 'Perempuan';
+                                            ?>
+                                                <tr class="align-middle">
+                                                    <td class="text-center whitespace-nowrap"><?= $no++; ?></td>
+                                                    <td class="text-center whitespace-nowrap"><?= $s['id_siswa']; ?></td>
+                                                    <td class="text-center whitespace-nowrap"><?= $s['nisn']; ?></td>
+                                                    <td class="whitespace-nowrap"><?= $s['nama']; ?></td>
+                                                    <td class="text-center whitespace-nowrap"><?= $jenisKelamin; ?></td>
+                                                    <td class="text-center whitespace-nowrap"><?= $s['jurusan']; ?></td>
+                                                    <td class="text-center whitespace-nowrap"><?= $s['kelas']; ?></td>
+                                                    <td class="text-center whitespace-nowrap"><?= $s['alamat']; ?></td>
+                                                    <td class="text-center whitespace-nowrap"><?= $s['agama']; ?></td>
+                                                    <td class="whitespace-nowrap"><?= $s['no_hp']; ?></td>
+                                                    <td class="whitespace-nowrap text-center flex">
+                                                        <button type="button" class="btn btn-primary">Edit</button> |
+                                                        <button type="button" class="btn btn-danger">Hapus</button>
                                                     </td>
                                                 </tr>
                                             <?php } ?>
-                                            </tr>
                                         </tbody>
                                     </table>
+
+                                    <!-- Inisialisasi DataTable -->
+                                    <script>
+                                        $(document).ready(function() {
+                                            $('#tabelSiswa').DataTable();
+                                        });
+                                    </script>
                                 </div>
                                 <!-- /.card-body -->
-                                <div class="card-footer clearfix">
+                                <!-- <div class="card-footer clearfix">
                                     <ul class="pagination pagination-sm m-0 float-end">
                                         <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                                         <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -320,7 +328,7 @@ $db = new database();
                                         <li class="page-item"><a class="page-link" href="#">3</a></li>
                                         <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -373,7 +381,7 @@ $db = new database();
             scrollbarAutoHide: 'leave',
             scrollbarClickScroll: true,
         };
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
             if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
                 OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {

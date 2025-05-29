@@ -1,3 +1,7 @@
+<?php
+include 'koneksi.php';
+$db = new database();
+?>
 <!doctype html>
 <html lang="en">
   <!--begin::Head-->
@@ -296,8 +300,8 @@
                 <!--begin::Small Box Widget 1-->
                 <div class="small-box text-bg-primary">
                   <div class="inner">
-                    <h3>150</h3>
-                    <p>New Orders</p>
+                    <h3><?php $jumlah=$db->tampilJumlahDataSiswa(); echo $jumlah;?></h3>
+                    <p>Siswa</p>
                   </div>
                   <svg
                     class="small-box-icon"
@@ -348,12 +352,12 @@
                 <!--end::Small Box Widget 2-->
               </div>
               <!--end::Col-->
-              <div class="col-lg-3 col-6">
+              <div class="col-lg-3 col-6 ">
                 <!--begin::Small Box Widget 3-->
-                <div class="small-box text-bg-warning">
+                <div class="small-box text-bg-warning text-white">
                   <div class="inner">
-                    <h3>44</h3>
-                    <p>User Registrations</p>
+                    <h3><?php $jumlah=$db->tampilJumlahDataKelas(); echo $jumlah;?></h3>
+                    <p>Kelas</p>
                   </div>
                   <svg
                     class="small-box-icon"
@@ -368,7 +372,7 @@
                   </svg>
                   <a
                     href="#"
-                    class="small-box-footer link-dark link-underline-opacity-0 link-underline-opacity-50-hover"
+                    class="small-box-footer link-dark link-underline-opacity-0 link-underline-opacity-50-hover text-white"
                   >
                     More info <i class="bi bi-link-45deg"></i>
                   </a>
