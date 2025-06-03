@@ -1,12 +1,64 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pengisian</title>
+    <link rel="stylesheet" href="./output.css">
+</head>
+
+<body class="w-screen h-max flex flex-col justify-center items-center">
+    <h1 class="flex items-center">Form Pengisian</h1>
+    <form class="border-2 border-solid w-max bg-blue-300 m-10 p-4" action="" method="post">
+        <label for="NISN">NISN</label><br>
+        <input class="border border-solid p-1" type="text" name="NISN" id="NISN" placeholder="NISN" required><br>
+
+        <label for="Nama">Nama</label><br>
+        <input class="border border-solid p-1" type="text" name="Nama" id="Nama" placeholder="Nama" required><br>
+
+        <label>Jenis Kelamin</label><br>
+        <input type="radio" name="JenisKelamin" id="laki-laki" value="L" required>
+        <label for="laki-laki">Laki-laki</label>
+
+        <input type="radio" name="JenisKelamin" id="perempuan" value="P" required>
+        <label for="perempuan">Perempuan</label><br>
+
+        <label for="Jurusan">Jurusan</label><br>
+        <input class="border border-solid p-1" type="text" name="Jurusan" id="Jurusan" placeholder="Jurusan" required><br>
+
+        <label for="Kelas">Kelas</label><br>
+        <input class="border border-solid p-1" type="text" name="Kelas" id="Kelas" placeholder="Kelas" required><br>
+
+        <label for="Alamat">Alamat</label><br>
+        <input class="border border-solid p-1" type="text" name="Alamat" id="Alamat" placeholder="Alamat" required><br>
+
+        <label for="Agama">Agama</label><br>
+        <input class="border border-solid p-1" type="text" name="Agama" id="Agama" placeholder="Agama" required><br>
+
+        <label for="NoHp">No HP</label><br>
+        <input class="border border-solid p-1" type="text" name="NoHp" id="NoHp" placeholder="No Hp" required><br>
+
+        <input class="border border-solid p-2 mt-2 bg-blue-500 text-white cursor-pointer" type="submit" name="simpan" value="Simpan">
+    </form>
+</body> -->
+
 <?php
 include 'koneksi.php';
 $db = new database();
 
 if (isset($_POST['simpan'])) {
-    $db->tambah_agama(
-        $_POST['nama_agama'],
+    $db->input_data_siswa(
+        nisn: $_POST['nisn'],
+        nama_siswa: $_POST['nama_siswa'],
+        jenis_kelamin: $_POST['jenis_kelamin'],
+        jurusan: $_POST['jurusan'],
+        kelas: $_POST['kelas'],
+        alamat: $_POST['alamat'],
+        agama: $_POST['agama'],
+        no_telp: $_POST['no_telp']
     );
-    header("Location: data.jurusan.php");
+    header("Location: data.siswa.php");
 }
 ?>
 <!doctype html>
@@ -110,17 +162,90 @@ if (isset($_POST['simpan'])) {
                         <form class="needs-validation" novalidate method="post">
                             <div class="card-body">
                                 <div class="row g-3">
+
+                                    <!-- NISN -->
+                                    <div class="col-md-6">
+                                        <label for="nisn" class="form-label">NISN</label>
+                                        <input type="text" class="form-control" id="nisn" name="nisn" required />
+                                        <div class="invalid-feedback">Tolong isi NISN.</div>
+                                    </div>
+
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-6">
-                                        <label for="nama" class="form-label">Nama Agama</label>
-                                        <input type="text" maxlength="10" class="form-control" id="nama" name="nama_agama" required />
-                                        <div class="invalid-feedback">Tolong isi nama Agama.</div>
+                                        <label for="nama" class="form-label">Nama Lengkap</label>
+                                        <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required />
+                                        <div class="invalid-feedback">Tolong isi nama lengkap.</div>
+                                    </div>
+
+                                    <!-- Nomor Telepon -->
+                                    <div class="col-md-6">
+                                        <label for="nohp" class="form-label">Nomor Telepon</label>
+                                        <input type="text" class="form-control" id="no_telp" name="no_telp" required />
+                                        <div class="invalid-feedback">Tolong isi nomor telepon.</div>
+                                    </div>
+
+                                    <!-- Alamat -->
+                                    <div class="col-md-6">
+                                        <label for="alamat" class="form-label">Alamat</label>
+                                        <input type="text" class="form-control" id="alamat" name="alamat" required />
+                                        <div class="invalid-feedback">Tolong isi alamat.</div>
+                                    </div>
+
+                                    <!-- Jenis Kelamin -->
+                                    <div class="col-md-6">
+                                        <label for="jk" class="form-label">Jenis Kelamin</label>
+                                        <select class="form-select" id="jk" name="jenis_kelamin" required>
+                                            <option selected disabled value="">Pilih Jenis Kelamin</option>
+                                            <option value="L">Laki-Laki</option>
+                                            <option value="P">Perempuan</option>
+                                        </select>
+                                        <div class="invalid-feedback">Tolong pilih jenis kelamin.</div>
+                                    </div>
+
+                                    <!-- Kelas -->
+                                    <div class="col-md-6">
+                                        <label for="kelas" class="form-label">Kelas</label>
+                                        <select class="form-select" id="kelas" name="kelas" required>
+                                            <option selected disabled value="">Pilih Kelas</option>
+                                            <option value="X">X</option>
+                                            <option value="XI">XI</option>
+                                            <option value="XII">XII</option>
+                                        </select>
+                                        <div class="invalid-feedback">Tolong pilih kelas.</div>
+                                    </div>
+
+                                    <!-- Jurusan -->
+                                    <div class="col-md-6">
+                                        <label for="jurusan" class="form-label">Jurusan</label>
+                                        <select class="form-select" id="jurusan" name="jurusan" required>
+                                            <option selected disabled value="">Pilih Jurusan</option>
+                                            <?php
+                                            foreach ($db->tampil_data_jurusan() as $s) {
+                                            ?>
+                                                <option class="text-black" value=<?= $s['id_jurusan'] ?>><?= $s['nama_jurusan'] ?></option>
+                                            <?php
+                                            }; ?>
+                                        </select>
+                                        <div class="invalid-feedback">Tolong pilih jurusan.</div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="agama" class="form-label">Agama</label>
+                                        <select class="form-select" id="agama" name="agama" required>
+                                            <option selected disabled value="">Pilih Agama</option>
+                                            <?php
+                                            foreach ($db->tampil_data_agama() as $s) {
+                                            ?>
+                                                <option class="text-black" value=<?= $s['id_agama'] ?>><?= $s['nama_agama'] ?></option>
+                                            <?php
+                                            }; ?>
+                                        </select>
+                                        <div class="invalid-feedback">Tolong pilih agama.</div>
                                     </div>
 
                                     <!-- Konfirmasi -->
                                     <div class="col-12">
 
-                                    </div>
                                 </div>
                             </div>
 

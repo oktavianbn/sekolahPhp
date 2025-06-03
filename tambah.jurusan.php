@@ -3,8 +3,8 @@ include 'koneksi.php';
 $db = new database();
 
 if (isset($_POST['simpan'])) {
-    $db->tambah_agama(
-        $_POST['nama_agama'],
+    $db->tambah_jurusan(
+        $_POST['nama_jurusan'],
     );
     header("Location: data.jurusan.php");
 }
@@ -112,9 +112,9 @@ if (isset($_POST['simpan'])) {
                                 <div class="row g-3">
                                     <!-- Nama Lengkap -->
                                     <div class="col-md-6">
-                                        <label for="nama" class="form-label">Nama Agama</label>
-                                        <input type="text" maxlength="10" class="form-control" id="nama" name="nama_agama" required />
-                                        <div class="invalid-feedback">Tolong isi nama Agama.</div>
+                                        <label for="nama" class="form-label">Nama Jurusan</label>
+                                        <input type="text" maxlength="10" class="form-control" id="nama" name="nama_jurusan" required />
+                                        <div class="invalid-feedback">Tolong isi nama Jurusan.</div>
                                     </div>
 
                                     <!-- Konfirmasi -->

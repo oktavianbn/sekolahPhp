@@ -7,7 +7,7 @@ class database
     private $host = "localhost";
     private $username = "root";
     private $password = "";
-    private $database = "sekolah";
+    private $database = "data_sekolah_db";
     private $koneksi;
 
     function __construct()
@@ -18,31 +18,35 @@ class database
         if ($this->koneksi) {
             // echo "Koneksi berhasil dan database ditemukan";
         } else {
-            // echo "Koneksi gagal: " . mysqli_connect_error();
+            echo "Koneksi gagal: " . mysqli_connect_error();
+            return;
         }
     }
+    function login() {}
+    
 
     function tampil_data_siswa()
     {
         $data_siswa = mysqli_query($this->koneksi, "SELECT 
-                s.id_siswa, 
-                s.nisn, 
-                s.nama, 
-                j.nama_jurusan AS jurusan, 
-                s.kelas, 
-                s.alamat, 
-                a.nama_agama AS agama, 
-                s.no_hp, 
-                s.jenis_kelamin 
-                    FROM siswa s
-                    JOIN jurusan j ON s.jurusan = j.id_jurusan
-                    JOIN agama a ON s.agama = a.id_agama");
+        s.id_siswa, 
+        s.nisn, 
+        s.nama_siswa, 
+        s.jenis_kelamin, 
+        s.kelas, 
+        j.nama_jurusan AS jurusan,
+        a.nama_agama AS agama,
+        s.alamat, 
+        s.no_telp
+        FROM siswa s
+        JOIN jurusan j ON s.jurusan = j.id_jurusan
+        JOIN agama a ON s.agama = a.id_agama");
         $hasil = array();
         while ($d = mysqli_fetch_array($data_siswa)) {
             $hasil[] = $d;
         }
         return $hasil;
     }
+
     function tampil_data_agama()
     {
         $data_agama = mysqli_query($this->koneksi, "SELECT * FROM agama");
@@ -61,11 +65,14 @@ class database
         }
         return $hasil;
     }
-    function input_data_siswa($nisn, $nama, $jenis_kelamin, $jurusan, $kelas, $alamat, $agama, $no_hp)
+    function input_data_siswa($nisn, $nama_siswa, $jenis_kelamin, $jurusan, $kelas, $alamat, $agama, $no_telp)
     {
-        mysqli_query($this->koneksi, "INSERT INTO siswa (nisn, nama, jenis_kelamin, jurusan, kelas, alamat, agama, no_hp) 
-        VALUES ('$nisn', '$nama', '$jenis_kelamin', '$jurusan', '$kelas', '$alamat', '$agama', '$no_hp')");
+        mysqli_query($this->koneksi, "INSERT INTO siswa 
+    (nisn, nama_siswa, jenis_kelamin, jurusan, kelas, alamat, agama, no_telp) 
+    VALUES 
+    ('$nisn', '$nama_siswa', '$jenis_kelamin', '$jurusan', '$kelas', '$alamat', '$agama', '$no_telp')");
     }
+
     function edit_data_siswa($id_siswa)
     {
         $data_siswa = mysqli_query($this->koneksi, "SELECT * FROM siswa WHERE id_siswa='$id_siswa'");
@@ -73,27 +80,32 @@ class database
     }
     function tambah_agama($nama_agama)
     {
-        $data = mysqli_query($this->koneksi, "INSERT INTO agama (nama_agama) VALUES ('$nama_agama')");
-        return mysqli_fetch_array($data);
+        mysqli_query($this->koneksi, "INSERT INTO agama (nama_agama) VALUES ('$nama_agama')");
     }
     function tambah_jurusan($nama_jurusan)
     {
-        $data = mysqli_query($this->koneksi, "INSERT INTO jurusan (nama_jurusan) VALUES ('$nama_jurusan')");
-        return mysqli_fetch_array($data);
+        mysqli_query($this->koneksi, "INSERT INTO jurusan (nama_jurusan) VALUES ('$nama_jurusan')");
     }
-    function tampilJumlahDataSiswa()
+    function tampilJumlahSiswa()
     {
         $data = mysqli_query($this->koneksi, "SELECT COUNT(*) AS total FROM siswa");
         $hasil = mysqli_fetch_assoc($data);
         return $hasil['total'];
     }
-    function tampilJumlahDataKelas()
+    function tampilJumlahJurusan()
     {
         $data = mysqli_query($this->koneksi, "SELECT COUNT(*) AS total FROM jurusan");
         $hasil = mysqli_fetch_assoc($data);
         return $hasil['total'];
     }
-    function hapusData($table,$id){
-        $data =mysqli_query($this->koneksi,"DELETE FROM $table WHERE $id");
+    function tampilJumlahAgama()
+    {
+        $data = mysqli_query($this->koneksi, "SELECT COUNT(*) AS total FROM agama");
+        $hasil = mysqli_fetch_assoc($data);
+        return $hasil['total'];
+    }
+    function hapusData($table, $id)
+    {
+        $data = mysqli_query($this->koneksi, "DELETE FROM $table WHERE $id");
     }
 }

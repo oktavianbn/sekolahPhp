@@ -8,12 +8,23 @@ $db = new database();
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AdminLTE 4 | Tables Siswa</title>
-    <!-- datatables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
-    <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+    <title>Admin | Tables Siswa</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- DataTables Bootstrap 5 CSS -->
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <!--begin::Primary Meta Tags-->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="AdminLTE 4 | Tables Siswa" />
     <meta name="author" content="ColorlibHQ" />
@@ -46,187 +57,7 @@ $db = new database();
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
         <!--begin::Header-->
-        <nav class="app-header navbar navbar-expand bg-body">
-            <!--begin::Container-->
-            <div class="container-fluid">
-                <!--begin::Start Navbar Links-->
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
-                            <i class="bi bi-list"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-                    <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
-                </ul>
-                <!--end::Start Navbar Links-->
-                <!--begin::End Navbar Links-->
-                <ul class="navbar-nav ms-auto">
-                    <!--begin::Navbar Search-->
-                    <li class="nav-item">
-                        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                            <i class="bi bi-search"></i>
-                        </a>
-                    </li>
-                    <!--end::Navbar Search-->
-                    <!--begin::Messages Dropdown Menu-->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                            <i class="bi bi-chat-text"></i>
-                            <span class="navbar-badge badge text-bg-danger">3</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <a href="#" class="dropdown-item">
-                                <!--begin::Message-->
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0">
-                                        <img src="dist/assets/img/user1-128x128.jpg" alt="User Avatar"
-                                            class="img-size-50 rounded-circle me-3" />
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h3 class="dropdown-item-title">
-                                            Brad Diesel
-                                            <span class="float-end fs-7 text-danger"><i
-                                                    class="bi bi-star-fill"></i></span>
-                                        </h3>
-                                        <p class="fs-7">Call me whenever you can...</p>
-                                        <p class="fs-7 text-secondary">
-                                            <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                        </p>
-                                    </div>
-                                </div>
-                                <!--end::Message-->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <!--begin::Message-->
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0">
-                                        <img src="dist/assets/img/user8-128x128.jpg" alt="User Avatar"
-                                            class="img-size-50 rounded-circle me-3" />
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h3 class="dropdown-item-title">
-                                            John Pierce
-                                            <span class="float-end fs-7 text-secondary">
-                                                <i class="bi bi-star-fill"></i>
-                                            </span>
-                                        </h3>
-                                        <p class="fs-7">I got your message bro</p>
-                                        <p class="fs-7 text-secondary">
-                                            <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                        </p>
-                                    </div>
-                                </div>
-                                <!--end::Message-->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <!--begin::Message-->
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0">
-                                        <img src="dist/assets/img/user3-128x128.jpg" alt="User Avatar"
-                                            class="img-size-50 rounded-circle me-3" />
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <h3 class="dropdown-item-title">
-                                            Nora Silvester
-                                            <span class="float-end fs-7 text-warning">
-                                                <i class="bi bi-star-fill"></i>
-                                            </span>
-                                        </h3>
-                                        <p class="fs-7">The subject goes here</p>
-                                        <p class="fs-7 text-secondary">
-                                            <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                        </p>
-                                    </div>
-                                </div>
-                                <!--end::Message-->
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                        </div>
-                    </li>
-                    <!--end::Messages Dropdown Menu-->
-                    <!--begin::Notifications Dropdown Menu-->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                            <i class="bi bi-bell-fill"></i>
-                            <span class="navbar-badge badge text-bg-warning">15</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <span class="dropdown-item dropdown-header">15 Notifications</span>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="bi bi-envelope me-2"></i> 4 new messages
-                                <span class="float-end text-secondary fs-7">3 mins</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="bi bi-people-fill me-2"></i> 8 friend requests
-                                <span class="float-end text-secondary fs-7">12 hours</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
-                                <span class="float-end text-secondary fs-7">2 days</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
-                        </div>
-                    </li>
-                    <!--end::Notifications Dropdown Menu-->
-                    <!--begin::Fullscreen Toggle-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-lte-toggle="fullscreen">
-                            <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
-                            <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
-                        </a>
-                    </li>
-                    <!--end::Fullscreen Toggle-->
-                    <!--begin::User Menu Dropdown-->
-                    <li class="nav-item dropdown user-menu">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="dist/assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow"
-                                alt="User Image" />
-                            <span class="d-none d-md-inline">Alexander Pierce</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <!--begin::User Image-->
-                            <li class="user-header text-bg-primary">
-                                <img src="dist/assets/img/user2-160x160.jpg" class="rounded-circle shadow"
-                                    alt="User Image" />
-                                <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2023</small>
-                                </p>
-                            </li>
-                            <!--end::User Image-->
-                            <!--begin::Menu Body-->
-                            <li class="user-body">
-                                <!--begin::Row-->
-                                <div class="row">
-                                    <div class="col-4 text-center"><a href="#">Followers</a></div>
-                                    <div class="col-4 text-center"><a href="#">Sales</a></div>
-                                    <div class="col-4 text-center"><a href="#">Friends</a></div>
-                                </div>
-                                <!--end::Row-->
-                            </li>
-                            <!--end::Menu Body-->
-                            <!--begin::Menu Footer-->
-                            <li class="user-footer">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
-                            </li>
-                            <!--end::Menu Footer-->
-                        </ul>
-                    </li>
-                    <!--end::User Menu Dropdown-->
-                </ul>
-                <!--end::End Navbar Links-->
-            </div>
-            <!--end::Container-->
-        </nav>
+        <?php include "navbar.php"; ?>
         <!--end::Header-->
         <!--begin::Sidebar-->
         <?php include "sidebar.php"; ?>
@@ -269,41 +100,41 @@ $db = new database();
                                 </div>
 
                                 <div class="card-body overflow-x-auto mx-2 gap-3">
-                                    <table id="tabelSiswa" class="display table table-bordered">
+                                    <table id="tabelSiswa" class="display table table-bordered ">
                                         <thead>
                                             <tr>
-                                                <th class="text-center whitespace-nowrap">No.</th>
-                                                <th class="text-center whitespace-nowrap">Id Siswa</th>
-                                                <th class="text-center whitespace-nowrap">NISN</th>
-                                                <th class="text-center whitespace-nowrap">Nama</th>
-                                                <th class="text-center whitespace-nowrap">Jenis Kelamin</th>
-                                                <th class="text-center whitespace-nowrap">Jurusan</th>
-                                                <th class="text-center whitespace-nowrap">Kelas</th>
-                                                <th class="text-center whitespace-nowrap">Alamat</th>
-                                                <th class="text-center whitespace-nowrap">Agama</th>
-                                                <th class="text-center whitespace-nowrap">NoHp</th>
-                                                <th class="text-center whitespace-nowrap">Opsi</th>
+                                                <th class="text-center text-nowrap">No.</th>
+                                                <th class="text-center text-nowrap">Id Siswa</th>
+                                                <th class="text-center text-nowrap">NISN</th>
+                                                <th class="text-center text-nowrap">Nama Siswa</th>
+                                                <th class="text-center text-nowrap">Jenis Kelamin</th>
+                                                <th class="text-center text-nowrap">Kelas</th>
+                                                <th class="text-center text-nowrap">Jurusan</th>
+                                                <th class="text-center text-nowrap">Agama</th>
+                                                <th class="text-center text-nowrap">Alamat</th>
+                                                <th class="text-center text-nowrap">No Telephone</th>
+                                                <th class="text-center text-nowrap">Opsi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $tabel="siswa";
+                                            $tabel = "siswa";
                                             $no = 1;
                                             foreach ($db->tampil_data_siswa() as $s) {
                                                 $jenisKelamin = $s['jenis_kelamin'] == 'L' ? 'Laki-laki' : 'Perempuan';
                                             ?>
                                                 <tr class="align-middle">
-                                                    <td class="text-center whitespace-nowrap"><?= $no++; ?></td>
-                                                    <td class="text-center whitespace-nowrap"><?= $s['id_siswa']; ?></td>
-                                                    <td class="text-center whitespace-nowrap"><?= $s['nisn']; ?></td>
-                                                    <td class="whitespace-nowrap"><?= $s['nama']; ?></td>
-                                                    <td class="text-center whitespace-nowrap"><?= $jenisKelamin; ?></td>
-                                                    <td class="text-center whitespace-nowrap"><?= $s['jurusan']; ?></td>
-                                                    <td class="text-center whitespace-nowrap"><?= $s['kelas']; ?></td>
-                                                    <td class="text-center whitespace-nowrap"><?= $s['alamat']; ?></td>
-                                                    <td class="text-center whitespace-nowrap"><?= $s['agama']; ?></td>
-                                                    <td class="whitespace-nowrap"><?= $s['no_hp']; ?></td>
-                                                    <td class="whitespace-nowrap text-center flex">
+                                                    <td class="text-center text-nowrap"><?= $no++; ?></td>
+                                                    <td class="text-center text-nowrap"><?= $s['id_siswa']; ?></td>
+                                                    <td class="text-center text-nowrap"><?= $s['nisn']; ?></td>
+                                                    <td class="text-nowrap"><?= $s['nama_siswa']; ?></td>
+                                                    <td class="text-center text-nowrap"><?= $jenisKelamin; ?></td>
+                                                    <td class="text-center text-nowrap"><?= $s['kelas']; ?></td>
+                                                    <td class="text-center text-nowrap"><?= $s['jurusan']; ?></td>
+                                                    <td class="text-center text-nowrap"><?= $s['agama']; ?></td>
+                                                    <td class="text-center text-nowrap"><?= $s['alamat']; ?></td>
+                                                    <td class="text-nowrap"><?= $s['no_telp']; ?></td>
+                                                    <td class="text-nowrap text-center flex">
                                                         <button type="button" class="btn btn-primary">Edit</button> |
                                                         <button type="button" class="btn btn-danger">Hapus</button>
                                                     </td>
@@ -315,20 +146,24 @@ $db = new database();
                                     <!-- Inisialisasi DataTable -->
                                     <script>
                                         $(document).ready(function() {
-                                            $('#tabelSiswa').DataTable();
+                                            $('#tabelSiswa').DataTable({
+                                                // pageLength: 10,
+                                                // responsive: true,
+                                                language: {
+                                                    search: "Cari:",
+                                                    lengthMenu: "Tampilkan _MENU_ data",
+                                                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                                                    paginate: {
+                                                        first: "Pertama",
+                                                        last: "Terakhir",
+                                                        next: "›",
+                                                        previous: "‹"
+                                                    },
+                                                },
+                                            });
                                         });
                                     </script>
                                 </div>
-                                <!-- /.card-body -->
-                                <!-- <div class="card-footer clearfix">
-                                    <ul class="pagination pagination-sm m-0 float-end">
-                                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                                    </ul>
-                                </div> -->
                             </div>
                             <!-- /.card-body -->
                         </div>

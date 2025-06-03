@@ -8,7 +8,7 @@ $db = new database();
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Admin | Tables Agama</title>
+    <title>Admin | Tables Kelas</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -26,7 +26,7 @@ $db = new database();
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="Admin | Tables Agama" />
+    <meta name="title" content="AdminLTE 4 | Tables Kelas" />
     <meta name="author" content="ColorlibHQ" />
     <meta name="description"
         content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS." />
@@ -71,12 +71,12 @@ $db = new database();
                     <!--begin::Row-->
                     <div class="row justify-end">
                         <!-- <div class="col-sm-6">
-                            <h3 class="mb-0">Tables Agama</h3>
+                            <h3 class="mb-0">Tables Kelas</h3>
                         </div> -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Tables Agama</li>
+                                <li class="breadcrumb-item active" aria-current="page">Tables Kelas</li>
                             </ol>
                         </div>
                     </div>
@@ -84,7 +84,6 @@ $db = new database();
                 </div>
                 <!--end::Container-->
             </div>
-
             <!--end::App Content Header-->
             <!--begin::App Content-->
             <div class="app-content">
@@ -97,41 +96,39 @@ $db = new database();
                             <div class="card mb-4">
                                 <div class="card-header flex justify-between items-center">
 
-                                    <h3 class="card-title">Tables Agama</h3>
+                                    <h3 class="card-title">Tables Kelas</h3>
                                 </div>
 
                                 <div class="card-body overflow-x-auto mx-2">
-                                    <table id="tabelAgama" class="table table-bordered">
+                                    <table id="tabelKelas" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th class="text-center text-nowrap">No.</th>
                                                 <th class="text-center text-nowrap">Id</th>
-                                                <th class="text-center text-nowrap">Agama</th>
+                                                <th class="text-center text-nowrap">Jurusan</th>
                                                 <th class="text-center text-nowrap">Opsi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            foreach ($db->tampil_data_agama() as $a) {
+                                            foreach ($db->tampil_data_jurusan() as $a) {
                                             ?>
-                                                <tr class="text-gray-700 text-center odd:bg-gray-50 even:bg-gray-200">
+                                                <tr class="align-middle">
                                                     <td class="text-center text-nowrap"><?php echo $no++; ?></td>
-                                                    <td class="text-center text-nowrap"><?php echo $a['id_agama']; ?></td>
-                                                    <td class="text-center text-nowrap"><?php echo $a['nama_agama']; ?></td>
-                                                    <td class="text-center text-nowrap">
+                                                    <td class="text-center text-nowrap"><?php echo $a['id_jurusan']; ?></td>
+                                                    <td class="text-center text-nowrap"><?php echo $a['nama_jurusan']; ?></td>
+                                                    <td class="text-center text-nowrap flex">
                                                         <button type="button" class="btn btn-primary">Edit</button> |
                                                         <button type="button" class="btn btn-danger">Hapus</button>
                                                     </td>
                                                 </tr>
-                                            <?php
-                                            }
-                                            ?>
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                     <script>
                                         $(document).ready(function() {
-                                            $('#tabelAgama').DataTable({
+                                            $('#tabelKelas').DataTable({
                                                 // pageLength: 10,
                                                 // responsive: true,
                                                 language: {
