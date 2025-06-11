@@ -1,12 +1,23 @@
 <?php
+session_start();
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== 'login') {
+    header("Location: login.php");
+    exit;
+}
 include 'koneksi.php';
 $db = new database();
-
+$hasil = '';
+$alertMessage = '';
 if (isset($_POST['simpan'])) {
-    $db->tambah_jurusan(
+    $hasil = $db->tambah_jurusan(
         $_POST['nama_jurusan'],
     );
-    header("Location: data.jurusan.php");
+}
+if ($hasil === false) {
+    $alertMessage = "Gagal: Jurusan sudah ada.";
+} elseif ($hasil !== '') {
+    header("Location: data.user.php");
+    exit;
 }
 ?>
 <!doctype html>
@@ -73,12 +84,12 @@ if (isset($_POST['simpan'])) {
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">General Form</h3>
+                            <h3 class="mb-0">Tambah Jurusan</h3>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">General Form</li>
+                                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Tambah Jurusan</li>
                             </ol>
                         </div>
                     </div>
@@ -93,44 +104,79 @@ if (isset($_POST['simpan'])) {
                 <div class="container-fluid">
                     <!--begin::Row-->
                     <div class="row g-4">
-                        <!--begin::Col-->
-                        <div class="col-12">
-                            <div class="callout callout-info">
-                                For detailed documentation of Form visit
-                                <a
-                                    href="https://getbootstrap.com/docs/5.3/forms/overview/"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="callout-link">
-                                    Bootstrap Form
-                                </a>
-                            </div>
-                        </div>
                         <!--begin::Form Validation-->
-                        <form class="needs-validation" novalidate method="post">
-                            <div class="card-body">
-                                <div class="row g-3">
-                                    <!-- Nama Lengkap -->
-                                    <div class="col-md-6">
-                                        <label for="nama" class="form-label">Nama Jurusan</label>
-                                        <input type="text" maxlength="10" class="form-control" id="nama" name="nama_jurusan" required />
-                                        <div class="invalid-feedback">Tolong isi nama Jurusan.</div>
-                                    </div>
+                        <div class="card card-info card-outline mb-4">
+                            <!--begin::Header-->
+                            <div class="card-header">
+                                <a class="btn btn-info" href="data.jurusan.php">Lihat Data</a>
+                            </div>
+                            <form class="needs-validation" novalidate method="post">
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <!-- Nama Lengkap -->
+                                        <div class="col-md-6">
+                                            <label for="nama" class="form-label">Nama Jurusan</label>
+                                            <input type="text" maxlength="10" class="form-control" id="nama" name="nama_jurusan" required />
+                                            <div class="invalid-feedback">Tolong isi nama Jurusan.</div>
+                                        </div>
 
-                                    <!-- Konfirmasi -->
-                                    <div class="col-12">
+                                        <!-- Konfirmasi -->
+                                        <div class="col-12">
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            value=""
+                                            id="invalidCheck"
+                                            required />
+                                        <label class="form-check-label" for="invalidCheck">
+                                            Setuju Bahwa Data Sudah Valid.
+                                        </label>
+                                        <div class="invalid-feedback">Anda harus setuju sebelum mengirim.</div>
+                                    </div>
+                                </div>
+                                <?php if (!empty($alertMessage)): ?>
+                                    <script>
+                                        alert("<?= $alertMessage ?>");
+                                    </script>
+                                <?php endif; ?>
+                                <!-- Tombol Submit -->
+                                <div class="card-footer">
+                                    <button class="btn btn-info" type="submit" name="simpan">Submit form</button>
+                                </div>
+                            </form>
+                            <script>
+                                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                                (() => {
+                                    'use strict';
 
-                            <!-- Tombol Submit -->
-                            <div class="card-footer">
-                                <button class="btn btn-info" type="submit" name="simpan">Submit form</button>
-                            </div>
-                        </form>
+                                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                    const forms = document.querySelectorAll('.needs-validation');
 
-                        <!--end::Form Validation-->
+                                    // Loop over them and prevent submission
+                                    Array.from(forms).forEach((form) => {
+                                        form.addEventListener(
+                                            'submit',
+                                            (event) => {
+                                                if (!form.checkValidity()) {
+                                                    event.preventDefault();
+                                                    event.stopPropagation();
+                                                }
+
+                                                form.classList.add('was-validated');
+                                            },
+                                            false,
+                                        );
+                                    });
+                                })();
+                            </script>
+                            <!--end::Form Validation-->
+                        </div>
                     </div>
                     <!--end::Col-->
                 </div>

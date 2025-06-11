@@ -1,6 +1,22 @@
 <?php
+session_start();
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== 'login') {
+    header("Location: login.php");
+    exit;
+}
+
 include 'koneksi.php';
 $db = new database();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
+    $id = $_POST['hapus_id'];
+    $table = $_POST['table'];
+    $primaryKey = $_POST['primary_key'];
+
+    $db->hapus_data($table, $primaryKey, $id);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -70,9 +86,9 @@ $db = new database();
                 <div class="container-fluid">
                     <!--begin::Row-->
                     <div class="row justify-end">
-                        <!-- <div class="col-sm-6">
+                        <div class="col-sm-6">
                             <h3 class="mb-0">Tables Agama</h3>
-                        </div> -->
+                        </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
@@ -93,11 +109,10 @@ $db = new database();
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-md-12">
-
                             <div class="card mb-4">
-                                <div class="card-header flex justify-between items-center">
-
+                                <div class="card-header flex justify-between r">
                                     <h3 class="card-title">Tables Agama</h3>
+
                                 </div>
 
                                 <div class="card-body overflow-x-auto mx-2">
@@ -120,9 +135,16 @@ $db = new database();
                                                     <td class="text-center text-nowrap"><?php echo $a['id_agama']; ?></td>
                                                     <td class="text-center text-nowrap"><?php echo $a['nama_agama']; ?></td>
                                                     <td class="text-center text-nowrap">
-                                                        <button type="button" class="btn btn-primary">Edit</button> |
-                                                        <button type="button" class="btn btn-danger">Hapus</button>
+                                                        <form method="POST" onsubmit="return confirm('Yakin ingin menghapus <?= $a['nama_agama']; ?>?');" style="display:inline;">
+                                                            <input type="hidden" name="hapus_id" value="<?= $a['id_agama']; ?>">
+                                                            <input type="hidden" name="table" value="agama">
+                                                            <input type="hidden" name="primary_key" value="id_agama">
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                                        </form>
+                                                        |
+                                                        <button type="button" class="btn btn-primary">Edit</button>
                                                     </td>
+
                                                 </tr>
                                             <?php
                                             }

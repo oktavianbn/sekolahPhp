@@ -1,6 +1,21 @@
 <?php
+session_start();
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== "login") {
+    header("Location: login.php");
+    exit;
+}
 include 'koneksi.php';
 $db = new database();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
+    $id = $_POST['hapus_id'];
+    $table = $_POST['table'];
+    $primaryKey = $_POST['primary_key'];
+
+    $db->hapus_data($table, $primaryKey, $id);
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -70,9 +85,9 @@ $db = new database();
                 <div class="container-fluid">
                     <!--begin::Row-->
                     <div class="row justify-end">
-                        <!-- <div class="col-sm-6">
+                        <div class="col-sm-6">
                             <h3 class="mb-0">Tables Siswa</h3>
-                        </div> -->
+                        </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -97,6 +112,7 @@ $db = new database();
                                 <div class="card-header flex justify-between items-center">
 
                                     <h3 class="card-title">Tables Siswa</h3>
+                                    
                                 </div>
 
                                 <div class="card-body overflow-x-auto mx-2 gap-3">
@@ -118,7 +134,6 @@ $db = new database();
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $tabel = "siswa";
                                             $no = 1;
                                             foreach ($db->tampil_data_siswa() as $s) {
                                                 $jenisKelamin = $s['jenis_kelamin'] == 'L' ? 'Laki-laki' : 'Perempuan';
@@ -135,8 +150,12 @@ $db = new database();
                                                     <td class="text-center text-nowrap"><?= $s['alamat']; ?></td>
                                                     <td class="text-nowrap"><?= $s['no_telp']; ?></td>
                                                     <td class="text-nowrap text-center flex">
-                                                        <button type="button" class="btn btn-primary">Edit</button> |
-                                                        <button type="button" class="btn btn-danger">Hapus</button>
+                                                        <form method="POST" onsubmit="return confirm('Yakin ingin menghapus <?= $s['nama_siswa']; ?>?');" style="display:inline;">
+                                                            <input type="hidden" name="hapus_id" value="<?= $s['id_siswa']; ?>">
+                                                            <input type="hidden" name="table" value="siswa">
+                                                            <input type="hidden" name="primary_key" value="id_siswa">
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                                        </form> |
                                                     </td>
                                                 </tr>
                                             <?php } ?>

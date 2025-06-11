@@ -1,19 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION['status']) || $_SESSION['status'] !== "login") {
+if (!isset($_SESSION['status']) || $_SESSION['status'] !== 'login') {
     header("Location: login.php");
     exit;
 }
 include 'koneksi.php';
 $db = new database();
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
     $id = $_POST['hapus_id'];
     $table = $_POST['table'];
     $primaryKey = $_POST['primary_key'];
 
     $db->hapus_data($table, $primaryKey, $id);
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: " . $_SERVER['PHP_SELF']); 
     exit;
 }
 ?>
@@ -23,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Admin | Tables Jurusan</title>
+    <title>Admin | Tables User</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -41,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="AdminLTE 4 | Tables Jurusan" />
+    <meta name="title" content="Admin | Tables User" />
     <meta name="author" content="ColorlibHQ" />
     <meta name="description"
         content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS." />
@@ -86,12 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
                     <!--begin::Row-->
                     <div class="row justify-end">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">Tables Jurusan</h3>
+                            <h3 class="mb-0">Tables User</h3>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Tables Jurusan</li>
+                                <li class="breadcrumb-item active" aria-current="page">Tables User</li>
                             </ol>
                         </div>
                     </div>
@@ -99,6 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
                 </div>
                 <!--end::Container-->
             </div>
+
             <!--end::App Content Header-->
             <!--begin::App Content-->
             <div class="app-content">
@@ -111,44 +111,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
                             <div class="card mb-4">
                                 <div class="card-header flex justify-between items-center">
 
-                                    <h3 class="card-title">Tables Jurusan</h3>
+                                    <h3 class="card-title">Tables User</h3>
+                                    
                                 </div>
 
                                 <div class="card-body overflow-x-auto mx-2">
-                                    <table id="tabelJurusan" class="table table-bordered">
+                                    <table id="tabelUser" class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <th class="text-center text-nowrap">No.</th>
                                                 <th class="text-center text-nowrap">Id</th>
-                                                <th class="text-center text-nowrap">Jurusan</th>
+                                                <th class="text-center text-nowrap">Username</th>
+                                                <th class="text-center text-nowrap">Password</th>
                                                 <th class="text-center text-nowrap">Opsi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $no = 1;
-                                            foreach ($db->tampil_data_jurusan() as $a) {
+                                            foreach ($db->tampil_data_user() as $a) {
                                             ?>
-                                                <tr class="align-middle">
+                                                <tr class="text-gray-700 text-center odd:bg-gray-50 even:bg-gray-200">
                                                     <td class="text-center text-nowrap"><?php echo $no++; ?></td>
-                                                    <td class="text-center text-nowrap"><?php echo $a['id_jurusan']; ?></td>
-                                                    <td class="text-center text-nowrap"><?php echo $a['nama_jurusan']; ?></td>
-                                                    <td class="text-center text-nowrap flex">
-                                                        <form method="POST" onsubmit="return confirm('Yakin ingin menghapus <?= $a['nama_jurusan']; ?>?');" style="display:inline;">
-                                                            <input type="hidden" name="hapus_id" value="<?= $a['id_jurusan']; ?>">
-                                                            <input type="hidden" name="table" value="jurusan">
-                                                            <input type="hidden" name="primary_key" value="id_jurusan">
+                                                    <td class="text-center text-nowrap"><?php echo $a['id_user']; ?></td>
+                                                    <td class="text-center text-nowrap"><?php echo $a['username']; ?></td>
+                                                    <td class="text-nowrap"><?php echo $a['password']; ?></td>
+                                                    <td class="text-center text-nowrap">
+                                                        <form method="POST" onsubmit="return confirm('Yakin ingin menghapus <?= $a['username']; ?>?');" style="display:inline;">
+                                                            <input type="hidden" name="hapus_id" value="<?= $a['id_user']; ?>">
+                                                            <input type="hidden" name="table" value="user">
+                                                            <input type="hidden" name="primary_key" value="id_user">
                                                             <button type="submit" class="btn btn-danger">Hapus</button>
-                                                            |
-                                                        </form>
+                                                        </form> |
+                                                        <button type="button" class="btn btn-danger">Hapus</button>
                                                     </td>
                                                 </tr>
-                                            <?php } ?>
+                                            <?php
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                     <script>
                                         $(document).ready(function() {
-                                            $('#tabelJurusan').DataTable({
+                                            $('#tabelUser').DataTable({
                                                 // pageLength: 10,
                                                 // responsive: true,
                                                 language: {

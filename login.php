@@ -1,30 +1,25 @@
 <?php
 session_start();
-require 'koneksi.php';
+include "koneksi.php"; // Pastikan file ini memuat class database
 
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+$db = new database(); // Membuat objek dari class database
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
 
-    if ($row = $result->fetch_assoc()) {
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['user_id'] = $row['id'];
-            $_SESSION['name'] = $row['name'];
-            header("Location: dashboard.php");
-            exit;
-        } else {
-            $error = "Password salah!";
-        }
+    if ($db->login($username, $password)) {
+        $_SESSION['username'] = $username;
+        $_SESSION['status'] = 'login';
+        header("Location: index.php");
+        exit;
     } else {
-        $error = "Username tidak ditemukan!";
+        $error = "Username atau password salah!";
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +33,7 @@ if (isset($_POST['login'])) {
     body { font-family: 'Inter', sans-serif; }
   </style>
 </head>
-<body class="bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center min-h-screen px-4">
+<body class=" flex items-center justify-center min-h-screen px-4">
   <div class="w-full max-w-md p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl">
     <div class="flex flex-col items-center mb-6">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-indigo-600 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,8 +61,8 @@ if (isset($_POST['login'])) {
     </form>
 
     <p class="mt-6 text-center text-sm text-gray-600">
-      Belum punya akun?
-      <a href="#" class="text-indigo-600 hover:underline font-medium">Daftar sekarang</a>
+      Belum punya akun? 
+      <a href="#" class="text-indigo-600 hover:underline font-medium">hubungi ADMIN</a>
     </p>
   </div>
 </body>

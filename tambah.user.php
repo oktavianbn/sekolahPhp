@@ -6,31 +6,22 @@ if (!isset($_SESSION['status']) || $_SESSION['status'] !== 'login') {
 }
 include 'koneksi.php';
 $db = new database();
-
 $hasil = '';
 $alertMessage = '';
 if (isset($_POST['simpan'])) {
-    $hasil = $db->input_data_siswa(
-        nisn: $_POST['nisn'],
-        nama_siswa: $_POST['nama_siswa'],
-        jenis_kelamin: $_POST['jenis_kelamin'],
-        jurusan: $_POST['jurusan'],
-        kelas: $_POST['kelas'],
-        alamat: $_POST['alamat'],
-        agama: $_POST['agama'],
-        no_telp: $_POST['no_telp']
+    $hasil = $db->tambah_user(
+        $_POST['username'],
+        $_POST['password'],
+
     );
 }
 if ($hasil === false) {
-    $alertMessage = "Gagal: NISN atau Nama sudah ada.";
+    $alertMessage = "Gagal: Username sudah ada.";
 } elseif ($hasil !== '') {
-    header ("Location: data.siswa.php");
+    header("Location: data.user.php");
     exit;
 }
 ?>
-
-
-
 <!doctype html>
 <html lang="en">
 <!--begin::Head-->
@@ -95,12 +86,12 @@ if ($hasil === false) {
                     <!--begin::Row-->
                     <div class="row">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">Tambah Siswa</h3>
+                            <h3 class="mb-0">Tambah User</h3>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-end">
                                 <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Tambah Siswa</li>
+                                <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
                             </ol>
                         </div>
                     </div>
@@ -119,97 +110,33 @@ if ($hasil === false) {
                         <div class="card card-info card-outline mb-4">
                             <!--begin::Header-->
                             <div class="card-header">
-                                <a class="btn btn-info" href="data.siswa.php">Lihat Data</a>
+                                <a class="btn btn-info" href="data.user.php">Lihat Data</a>
                             </div>
+                            <!--end::Header-->
+                            <!--begin::Form-->
                             <form class="needs-validation" novalidate method="post">
                                 <div class="card-body">
-                                    <div class="row g-3">
+                                    <div class=" ">
 
-                                        <!-- NISN -->
+                                        <!-- Username -->
                                         <div class="col-md-6">
-                                            <label for="nisn" class="form-label">NISN</label>
-                                            <input type="text" class="form-control" id="nisn" name="nisn" maxlength="10" required />
-                                            <div class="invalid-feedback">Tolong isi NISN.</div>
+                                            <label for="username" class="form-label">username</label>
+                                            <input type="text" class="form-control" id="username" name="username" maxlength="20" required />
+                                            <div class="invalid-feedback">Tolong isi username.</div>
                                         </div>
 
-                                        <!-- Nama Lengkap -->
+                                        <!--Password -->
                                         <div class="col-md-6">
-                                            <label for="nama" class="form-label">Nama Lengkap</label>
-                                            <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" maxlength="50" required />
-                                            <div class="invalid-feedback">Tolong isi nama lengkap.</div>
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="text" class="form-control" id="password" name="password" required />
+                                            <div class="invalid-feedback">Tolong isi Password.</div>
                                         </div>
 
-                                        <!-- Nomor Telepon -->
-                                        <div class="col-md-6">
-                                            <label for="nohp" class="form-label">Nomor Telepon</label>
-                                            <input type="text" class="form-control" id="no_telp" name="no_telp" maxlength="15" required />
-                                            <div class="invalid-feedback">Tolong isi nomor telepon.</div>
-                                        </div>
-
-                                        <!-- Alamat -->
-                                        <div class="col-md-6">
-                                            <label for="alamat" class="form-label">Alamat</label>
-                                            <input type="text" class="form-control" id="alamat" name="alamat" maxlength="100" required />
-                                            <div class="invalid-feedback">Tolong isi alamat.</div>
-                                        </div>
-
-                                        <!-- Jenis Kelamin -->
-                                        <div class="col-md-6">
-                                            <label for="jk" class="form-label">Jenis Kelamin</label>
-                                            <select class="form-select" id="jk" name="jenis_kelamin" required>
-                                                <option selected disabled value="">Pilih Jenis Kelamin</option>
-                                                <option value="L">Laki-Laki</option>
-                                                <option value="P">Perempuan</option>
-                                            </select>
-                                            <div class="invalid-feedback">Tolong pilih jenis kelamin.</div>
-                                        </div>
-
-                                        <!-- Kelas -->
-                                        <div class="col-md-6">
-                                            <label for="kelas" class="form-label">Kelas</label>
-                                            <select class="form-select" id="kelas" name="kelas" required>
-                                                <option selected disabled value="">Pilih Kelas</option>
-                                                <option value="X">X</option>
-                                                <option value="XI">XI</option>
-                                                <option value="XII">XII</option>
-                                            </select>
-                                            <div class="invalid-feedback">Tolong pilih kelas.</div>
-                                        </div>
-
-                                        <!-- Jurusan -->
-                                        <div class="col-md-6">
-                                            <label for="jurusan" class="form-label">Jurusan</label>
-                                            <select class="form-select" id="jurusan" name="jurusan" required>
-                                                <option selected disabled value="">Pilih Jurusan</option>
-                                                <?php
-                                                foreach ($db->tampil_data_jurusan() as $s) {
-                                                ?>
-                                                    <option class="text-black" value=<?= $s['id_jurusan'] ?>><?= $s['nama_jurusan'] ?></option>
-                                                <?php
-                                                }; ?>
-                                            </select>
-                                            <div class="invalid-feedback">Tolong pilih jurusan.</div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <label for="agama" class="form-label">Agama</label>
-                                            <select class="form-select" id="agama" name="agama" required>
-                                                <option selected disabled value="">Pilih Agama</option>
-                                                <?php
-                                                foreach ($db->tampil_data_agama() as $s) {
-                                                ?>
-                                                    <option class="text-black" value=<?= $s['id_agama'] ?>><?= $s['nama_agama'] ?></option>
-                                                <?php
-                                                }; ?>
-                                            </select>
-                                            <div class="invalid-feedback">Tolong pilih agama.</div>
-                                        </div>
-
-                                        <!-- Konfirmasi -->
                                         <div class="col-12">
 
                                         </div>
                                     </div>
+
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input
