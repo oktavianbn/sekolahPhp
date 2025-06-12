@@ -45,13 +45,13 @@ Website ini adalah aplikasi **Dashboard Admin** berbasis web yang dikembangkan d
 ## 📸 Cuplikan
 
 ![Screenshot](./img.md/image.png)
-login
-![Screenshot](./img.md/image1.png)
-dashboard
+Tambah Data
 ![Screenshot](./img.md/image2.png)
 lihat data
 ![Screenshot](./img.md/image3.png)
-tambah data
+Dashboard
+![Screenshot](./img.md/image4.png)
+Login
 
 ---
 
